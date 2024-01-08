@@ -21,7 +21,6 @@ export const TR = styled.tr`
 export const TH = styled.th`
   padding: 0.5rem;
   border-bottom: ${(props) => `2px solid ${props.theme.color.black100}`};
-  min-width: ${(props) => `${props.minWidth}px`};
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -46,7 +45,6 @@ export const TD = styled.td`
   margin: 0;
   padding: 0.5rem;
   max-height: 100px;
-  min-width: ${(props) => `${props.minWidth}px`};
   border-bottom: ${(props) => `1px solid ${props.theme.color.black100}`};
   border-right: ${(props) => `1px solid ${props.theme.color.black100}`};
   position: relative;

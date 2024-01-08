@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as GlobalStyles from "../../style/global";
 import { toastError, toastInfo, toastSuccess } from "../../style/styleUtils";
+import useUploadOrders from "../../apis/order/useUploadOrders";
 import PageHeader from "../../components/Global/PageHeader";
-import TableHeader from "../../components/Global/TableHeader";
+import AddItemsArea from "../../components/Global/AddItemsArea";
 import TableListArea from "../../components/Global/TableListArea";
 import {
   errorMsgs,
@@ -110,7 +111,12 @@ const OrderMngPage = () => {
         <PageHeader title="Order Management" />
 
         <GlobalStyles.PageContainer>
-          <TableHeader itemType={itemTypes.order.en} itemsNum={orders.length} />
+          <AddItemsArea
+            itemType={itemTypes.order}
+            itemsNum={orders.length}
+            setItems={setOrders}
+            uploadItemsMutation={useUploadOrders}
+          />
           <TableListArea
             columns={columns}
             data={tableRows}

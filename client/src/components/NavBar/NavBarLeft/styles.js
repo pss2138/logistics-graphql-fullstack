@@ -12,7 +12,7 @@ export const Menus = styled.div`
 export const MenuBtn = styled(BasicButton)`
   margin-left: 9px;
   color: ${(props) =>
-    props.isActive ? props.theme.color.white : props.theme.color.grey100};
+    props.isactive ? props.theme.color.white : props.theme.color.grey100};
   &:hover {
     color: ${(props) => props.theme.color.white};
   }

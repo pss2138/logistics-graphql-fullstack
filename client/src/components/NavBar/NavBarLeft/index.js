@@ -26,7 +26,9 @@ const NavBarLeft = () => {
             onClick={() => {
               handleClickMenu(menu.path);
             }}
-            isActive={menu.path === window.location.pathname ? true : undefined}
+            isactive={
+              menu.path === window.location.pathname ? "true" : undefined
+            }
             key={menu.path}
           >
             {menu.text}

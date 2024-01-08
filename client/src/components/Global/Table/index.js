@@ -17,10 +17,7 @@ const Table = ({
   deleteItemsMutation,
   setDeletingItems,
 }) => {
-  const defaultColumn = useMemo(
-    () => ({ minWidth: 50, width: 150, maxWidth: 400 }),
-    []
-  );
+  const defaultColumn = useMemo(() => ({ width: 150, maxWidth: 400 }), []);
 
   const {
     getTableProps,
@@ -93,7 +90,7 @@ const Table = ({
           {headerGroups.map((headerGroup) => (
             <Styles.TR {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <Styles.TH {...column.getHeaderProps()} minWidth>
+                <Styles.TH {...column.getHeaderProps()}>
                   {column.render("Header")}
                   <Styles.Resizer {...column.getResizerProps()} />
                 </Styles.TH>
@@ -109,7 +106,7 @@ const Table = ({
               <Styles.TR {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <Styles.TD {...cell.getCellProps()} minWidth>
+                    <Styles.TD {...cell.getCellProps()}>
                       {cell.render("Cell")}
                     </Styles.TD>
                   );

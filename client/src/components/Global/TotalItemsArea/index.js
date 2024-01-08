@@ -6,8 +6,8 @@ const TotalItemsArea = ({ itemType, itemsNum }) => {
     <Styles.TotalItemsArea>
       <Styles.TotalItemsIcon />
       <Styles.TotalItemsTitle>
-        Total {itemType[0].toUpperCase()}
-        {itemType.slice(1)}
+        Total {itemType.en[0].toUpperCase()}
+        {itemType.en.slice(1)}
       </Styles.TotalItemsTitle>
       <Styles.TotalItemsNum>{itemsNum}</Styles.TotalItemsNum>
     </Styles.TotalItemsArea>

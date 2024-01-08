@@ -23,7 +23,7 @@ const SelectCell = ({ initialValue, row: { original }, type }) => {
         {statuses[type].map((option, index) => {
           return (
             <Styles.Option key={index} value={option.en}>
-              {option.en}
+              {option.label.en}
             </Styles.Option>
           );
         })}

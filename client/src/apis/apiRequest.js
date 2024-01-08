@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiRequest = axios.create({
-  baseURL: process.env.REACT_APP_DOMAIN,
+  baseURL: process.env.REACT_APP_GRAPHQL_DOMAIN,
   headers: {
     "Content-Type": "application/json",
     // withCredentials: true,

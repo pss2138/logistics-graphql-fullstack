@@ -23,7 +23,10 @@ export const errorMsgs = {
   ON_PROCESS: {
     message: "Loading... Please try again later.",
   },
-  PRODUCT_DELETE_FAILED: {
+  ITEM_UPLOAD_FAILED: {
+    message: "Failed item uploading.\nAfter refresh, please try again.",
+  },
+  ITEM_DELETE_FAILED: {
     message: "Failed item deleting.\nAfter refresh, please try again.",
   },
 };
@@ -48,24 +51,28 @@ export const successMsgs = {
 
 // Orders
 const orderStatuses = [
-  { id: 1, en: "initOrdered" },
-  { id: 2, en: "purchasedFGRN" },
-  { id: 3, en: "deliveryOrdered" },
-  { id: 4, en: "trackingNumFGRNEntered" },
-  { id: 5, en: "trackingNumKorEntered" },
-  { id: 6, en: "deliveryCompleted" },
-  { id: 7, en: "purchaseConfirmed" },
-  { id: 9, en: "purchaseCanceled" },
+  { id: 1, en: "initOrdered", label: { en: "Initial Order" } },
+  { id: 2, en: "purchasedFGRN", label: { en: "Purchased In China" } },
+  { id: 3, en: "deliveryOrdered", label: { en: "Deliverying In China" } },
+  {
+    id: 4,
+    en: "trackingNumFGRNEntered",
+    label: { en: "Foreign Delivery Number Entered" },
+  },
+  {
+    id: 5,
+    en: "trackingNumUsaEntered",
+    label: { en: "Regional Delivery Number Entered" },
+  },
+  { id: 6, en: "deliveryCompleted", label: { en: "Delivery Completed" } },
+  { id: 7, en: "purchaseConfirmed", label: { en: "Purchased Confirmed" } },
+  { id: 9, en: "purchaseCanceled", label: { en: "Purchase Canceled" } },
 ];
 export const statuses = {
   orderStatus: orderStatuses,
 };
 export const itemTypes = {
   order: { en: "order" },
-};
-export const fileTypes = {
-  product: "csv",
-  order: "xslx,xls",
 };
 export const nonTableUpdatePathnames = [];
 
@@ -94,8 +101,8 @@ const inputCells = {
     Header: "Order Number",
     Cell: (props) => getInputCell({ props, isAlphabetNumberOnly: true }),
   },
-  trackingNumKor: {
-    accessor: "trackingNumKor",
+  trackingNumUsa: {
+    accessor: "trackingNumUsa",
     Header: "Tracking Number",
     Cell: (props) => getInputCell({ props, isAlphabetNumberOnly: true }),
   },
@@ -194,7 +201,7 @@ export const orderColumn = [
   selectCells.orderStatus,
   nonEditableCells.orderedAt,
   inputCells.orderNumFrgn,
-  inputCells.trackingNumKor,
+  inputCells.trackingNumUsa,
   inputCells.buyerName,
   inputCells.receiverName,
   inputCells.personalCustomsIdNum,
