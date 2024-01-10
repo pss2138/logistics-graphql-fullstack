@@ -4,11 +4,11 @@ import * as Styles from "./styles";
 import { toastError } from "../../../../style/styleUtils";
 
 const AddItemsBtn = ({ itemType, setItems, uploadItemsMutation }) => {
-  const createRandomItem = (newItems, isError) => {
+  const createRandomItem = (isError) => {
     try {
       if (itemType.en === "order") {
         const newOrder = {
-          _id: "ioij213512joi2135",
+          id: "ioij213512joi2135",
           orderStatus: { order: 1, en: "initOrdered" },
           orderedAt: "2023-10-01",
           orderNumFrgn: (Math.random() * 10000000000).toFixed(0).toString(),
@@ -24,7 +24,7 @@ const AddItemsBtn = ({ itemType, setItems, uploadItemsMutation }) => {
           option: "",
           memo: "Please handle carefully.",
         };
-        newItems.push(newOrder);
+        return newOrder;
       }
     } catch (error) {
       toastError(errorMsgs);
@@ -34,11 +34,10 @@ const AddItemsBtn = ({ itemType, setItems, uploadItemsMutation }) => {
   const handleClickButton = async (event) => {
     event.preventDefault();
     let isError = false;
-    let newItems = [];
-    createRandomItem(newItems, isError);
-    if (newItems.length > 0 && !isError) {
-      // await uploadItemsMutation.mutate(newItems);
-      setItems((oldData) => [...oldData, ...newItems]);
+    const newItem = createRandomItem(isError);
+    if (newItem?.productName && !isError) {
+      await uploadItemsMutation.mutate(newItem);
+      setItems((oldData) => [...oldData, newItem]);
     }
   };
 

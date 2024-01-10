@@ -1,37 +1,26 @@
 import axios from "axios";
 
-const apiRequest = axios.create({
-  baseURL: process.env.REACT_APP_GRAPHQL_DOMAIN,
-  headers: {
-    "Content-Type": "application/json",
-    // withCredentials: true,
-  },
-  timeout: 1000, // 1 second
-});
-
-apiRequest.interceptors.request.use(
+const requestInterceptorHandlers = [
   function (config) {
-    // console.log("interceptor request >", config);
     // TODO : fix retrieving token solution from browser asynStorage
     const token = undefined;
 
     if (token) {
       config.headers.common["Authorization"] = `Bearer ${token}`;
-      // config.headers.common["Authorization"] = `${token}`;
     }
+    // config.headers.common["A"]
     return config;
   },
   function (error) {
-    // console.log("interceptor request >", error);
     // TODO: Add handleApiError(error)
     return Promise.reject(error);
-  }
-);
+  },
+];
 
-apiRequest.interceptors.response.use(
+const responseInterceptorHandlers = [
   (response) => {
     if (response.status === 404) {
-      console.log("404 페이지로 넘어가야 함!");
+      console.log("ERROR 404");
     }
 
     return response.data;
@@ -57,8 +46,33 @@ apiRequest.interceptors.response.use(
     //     return response;
     // }
     return Promise.reject(error);
-  }
-);
+  },
+];
 
-export default apiRequest;
-// how to use : const res = await apiRequest.post('/api/board', board);
+const db = axios.create({
+  baseURL: process.env.REACT_APP_GRAPHQL_DOMAIN,
+  headers: {
+    "Content-Type": "application/json",
+    // withCredentials: true,
+  },
+  timeout: 1000, // 1 second
+});
+db.interceptors.request.use(...requestInterceptorHandlers);
+db.interceptors.response.use(...responseInterceptorHandlers);
+
+const server = axios.create({
+  baseURL: process.env.REACT_APP_SERVER_DOMAIN,
+  headers: {
+    "Content-Type": "application/json",
+    // withCredentials: true,
+  },
+  timeout: 1000,
+});
+server.interceptors.request.use(...requestInterceptorHandlers);
+server.interceptors.response.use(...responseInterceptorHandlers);
+// const server = new Object(db, { baseURL: process.env.REACT_APP_SERVER_DOMAIN });
+
+export default { db, server };
+// [ how to use ]
+// const res = await apiRequest.db.get('/order');
+// const res = await apiRequest.server.post('/order', orders);

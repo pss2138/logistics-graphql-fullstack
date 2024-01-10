@@ -4,14 +4,14 @@ import apiRequest from "../apiRequest";
 
 export default function useDeleteOrders(orderIds, options) {
   return useMutation({
-    mutationKey: `orders`,
+    mutationKey: `order`,
     // TODO : not sure if same queryKey with different method still request at the right timing (instead of not requesting)
     mutationFn: async () => {
-      return await apiRequest.delete("/orders", orderIds);
+      return await apiRequest.db.delete("/order", orderIds);
     },
     onSuccess: (data) => {
       // request GET '/orders' again to update. but it seems not useful for spread sheet.
-      queryClient.invalidateQueries("orders");
+      queryClient.invalidateQueries("order");
       // if (data.length > 0) queryClient.removeQueries("orders"); // not sure if we need to remove as well
     },
     onError: () => {

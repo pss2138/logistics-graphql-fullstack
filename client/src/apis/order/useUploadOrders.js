@@ -2,17 +2,17 @@ import { useMutation } from "react-query";
 import queryClient from "..";
 import apiRequest from "../apiRequest";
 
-export default function useUploadOrders(orders) {
+export default function useUploadOrders() {
   return useMutation({
-    mutationKey: `orders`,
+    mutationKey: `order`,
     // TODO : not sure if same queryKey with different method still request at the right timing (instead of not requesting)
-    mutationFn: async () => {
-      return await apiRequest.post("/orders", orders);
+    mutationFn: async (orders) => {
+      return await apiRequest.server.post("/order", orders);
     },
     onSuccess: (data) => {
-      // request GET '/orders' again to update. but it seems not useful for spread sheet.
-      queryClient.invalidateQueries("orders");
-      // if (data.length > 0) queryClient.removeQueries("orders"); // not sure if we need to remove as well
+      // request GET '/order' again to update. but it seems not useful for spread sheet.
+      queryClient.invalidateQueries("order");
+      // if (data.length > 0) queryClient.removeQueries("order"); // not sure if we need to remove as well
     },
     onError: () => {
       // TODO: add defaultErrorHandler()

@@ -32,6 +32,7 @@ const OrderMngPage = () => {
   }, []);
   const tableRows = useMemo(() => orders, [orders]);
   const queryOrders = useOrders();
+  const uploadOrdersMutation = useUploadOrders();
 
   const retrieveOrders = async () => {
     if (queryOrders.data?.orders && orders.length < 1) {
@@ -99,7 +100,7 @@ const OrderMngPage = () => {
         deletingOrders.map((row) => row.original._id)
       );
       if (deleteOrdersMutation.isError) {
-        toastError(errorMsgs.ORDER_DELETE_FAILED.message);
+        toastError(errorMsgs.ITEM_DELETE_FAILED.message);
       }
       setDeletingOrders([]);
     }
@@ -115,7 +116,7 @@ const OrderMngPage = () => {
             itemType={itemTypes.order}
             itemsNum={orders.length}
             setItems={setOrders}
-            uploadItemsMutation={useUploadOrders}
+            uploadItemsMutation={uploadOrdersMutation}
           />
           <TableListArea
             columns={columns}
