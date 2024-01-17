@@ -30,12 +30,9 @@ export const getOrders = async (parent, args) => {
     const orderRepository = (await DB.getDbDataSource()).getRepository(
       DB.Order
     );
-    const result = await orderRepository.find();
+    const orders = await orderRepository.find();
 
-    return {
-      message: "ok",
-      data: result,
-    };
+    return orders;
   } catch (e) {
     console.log(e);
     return new GraphQLError(e);
