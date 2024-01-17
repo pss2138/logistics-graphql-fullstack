@@ -1,8 +1,6 @@
 import { DataSource } from "typeorm";
 import Order from "../app/models/order.model.js";
 
-// This file is only for migration
-
 const dbEntities = { Order };
 const dbDataSource = new DataSource({
   type: "postgres",

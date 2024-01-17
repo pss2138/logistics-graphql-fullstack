@@ -17,6 +17,7 @@ const getDbDataSource = async () => {
 
     logging: process.env.STAGE !== "prod",
   });
+
   await dataSource
     .initialize()
     .then(() => {
