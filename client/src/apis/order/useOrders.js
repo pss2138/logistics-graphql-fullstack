@@ -1,14 +1,27 @@
-import { useQuery } from "react-query";
-import apiRequest from "../apiRequest";
+import { useQuery, gql } from "@apollo/client";
 
-export default function useOrders(options) {
-  return useQuery({
-    queryKey: `orders`,
-    queryFn: async () => {
-      return await apiRequest.get("/orders");
-    },
-    onSuccess: () => {},
-    onError: () => {},
-    options,
-  });
+const GET_ORDERS = gql`
+  query GetOrders {
+    orders {
+      id
+      orderStatus
+
+      orderNumFrgn
+      trackingNumUsa
+      buyerName
+      receiverName
+      personalCustomsIdNum
+      buyerPhone
+      deliveryAddress
+      deliveryMsg
+      productName
+      amount
+      option
+      memo
+    }
+  }
+`;
+
+export default function useOrders() {
+  return useQuery(GET_ORDERS);
 }

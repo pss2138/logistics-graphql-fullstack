@@ -50,7 +50,7 @@ const responseInterceptorHandlers = [
 ];
 
 const db = axios.create({
-  baseURL: process.env.REACT_APP_GRAPHQL_DOMAIN,
+  baseURL: process.env.REACT_APP_GRAPHQL_URI,
   headers: {
     "Content-Type": "application/json",
     // withCredentials: true,

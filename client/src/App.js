@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_DOMAIN,
+  uri: process.env.REACT_APP_GRAPHQL_URI,
   cache: new InMemoryCache(),
 });
 

@@ -35,6 +35,7 @@ const OrderMngPage = () => {
   const uploadOrdersMutation = useUploadOrders();
 
   const retrieveOrders = async () => {
+    // TODO : Switch to { loading, error, data } = useOrders(); for component rendering with ifs
     if (queryOrders.data?.orders && orders.length < 1) {
       setOrders(queryOrders.data.orders);
     }
