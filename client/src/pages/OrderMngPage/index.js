@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as GlobalStyles from "../../style/global";
 import { toastError, toastInfo, toastSuccess } from "../../style/styleUtils";
-import useUploadOrders from "../../apis/order/useUploadOrders";
+import useUploadOrder from "../../apis/order/useUploadOrder";
 import PageHeader from "../../components/Global/PageHeader";
 import AddItemsArea from "../../components/Global/AddItemsArea";
 import TableListArea from "../../components/Global/TableListArea";
@@ -32,7 +32,7 @@ const OrderMngPage = () => {
   }, []);
   const tableRows = useMemo(() => orders, [orders]);
   const queryOrders = useOrders();
-  const uploadOrdersMutation = useUploadOrders();
+  const uploadOrderMutation = useUploadOrder();
 
   const retrieveOrders = async () => {
     // TODO : Switch to { loading, error, data } = useOrders(); for component rendering with ifs
@@ -49,7 +49,7 @@ const OrderMngPage = () => {
   // Update orders
   ////////////////
   const [updatingOrders, setUpdatingOrders] = useState([]);
-  const updateOrdersMutation = useUpdateOrders();
+  const updateOrdersMutation = useUpdateOrders(updatingOrders);
 
   const handleUpdateOrders = async (rowIndex, itemId, updatingCells) => {
     handleUpdateItems({
@@ -65,11 +65,11 @@ const OrderMngPage = () => {
   const saveUpdatingOrders = (e) => {
     e.preventDefault();
     if (updatingOrders.length > 0) {
-      updateOrdersMutation.mutate(updatingOrders);
+      updateOrdersMutation[0](updatingOrders);
 
-      if (updateOrdersMutation.isError) {
+      if (updateOrdersMutation.error) {
         toastError(errorMsgs.ITEM_SAVE_FAILED.message);
-      } else if (updateOrdersMutation.isSuccess) {
+      } else {
         toastSuccess(successMsgs.ITEM_SAVE_SUCCESSED.message);
         setUpdatingOrders([]);
       }
@@ -100,7 +100,7 @@ const OrderMngPage = () => {
       deleteOrdersMutation.mutate(
         deletingOrders.map((row) => row.original._id)
       );
-      if (deleteOrdersMutation.isError) {
+      if (deleteOrdersMutation.error) {
         toastError(errorMsgs.ITEM_DELETE_FAILED.message);
       }
       setDeletingOrders([]);
@@ -117,12 +117,12 @@ const OrderMngPage = () => {
             itemType={itemTypes.order}
             itemsNum={orders.length}
             setItems={setOrders}
-            uploadItemsMutation={uploadOrdersMutation}
+            uploadItemsMutation={uploadOrderMutation}
           />
           <TableListArea
             columns={columns}
             data={tableRows}
-            isUpdateItemsLoading={updateOrdersMutation.isLoading}
+            isUpdateItemsLoading={updateOrdersMutation.loading}
             handleUpdateItems={handleUpdateOrders}
             saveUpdatingItems={saveUpdatingOrders}
             isDeleteModalOpen={isDeleteModalOpen}

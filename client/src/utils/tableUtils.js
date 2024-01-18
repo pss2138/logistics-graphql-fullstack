@@ -17,19 +17,27 @@ export const handleUpdateItems = ({
       })
     );
 
+    // remove __typename field
+    const itemInputs = [];
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].__typename) {
+        const { __typename, ...rest } = items[i];
+        itemInputs.push(rest);
+      }
+    }
     // setState updatingItems to send PATCH request
     setUpdatingItems((oldData) => {
       let isNew = true;
       let updatedData = oldData.map((row) => {
         if (row._id === itemId) {
           isNew = false;
-          return { ...items[rowIndex], ...updatingCells };
+          return { ...itemInputs[rowIndex], ...updatingCells };
         }
         return row;
       });
 
       if (!isNew) return updatedData;
-      else return [...oldData, { ...items[rowIndex], ...updatingCells }];
+      else return [...oldData, { ...itemInputs[rowIndex], ...updatingCells }];
     });
 
     resolve("success");

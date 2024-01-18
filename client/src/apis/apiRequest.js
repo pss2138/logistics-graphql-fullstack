@@ -49,18 +49,7 @@ const responseInterceptorHandlers = [
   },
 ];
 
-const db = axios.create({
-  baseURL: process.env.REACT_APP_GRAPHQL_URI,
-  headers: {
-    "Content-Type": "application/json",
-    // withCredentials: true,
-  },
-  timeout: 1000, // 1 second
-});
-db.interceptors.request.use(...requestInterceptorHandlers);
-db.interceptors.response.use(...responseInterceptorHandlers);
-
-const server = axios.create({
+const apiRequest = axios.create({
   baseURL: process.env.REACT_APP_SERVER_DOMAIN,
   headers: {
     "Content-Type": "application/json",
@@ -68,11 +57,9 @@ const server = axios.create({
   },
   timeout: 1000,
 });
-server.interceptors.request.use(...requestInterceptorHandlers);
-server.interceptors.response.use(...responseInterceptorHandlers);
-// const server = new Object(db, { baseURL: process.env.REACT_APP_SERVER_DOMAIN });
+apiRequest.interceptors.request.use(...requestInterceptorHandlers);
+apiRequest.interceptors.response.use(...responseInterceptorHandlers);
 
-export default { db, server };
+export default apiRequest;
 // [ how to use ]
-// const res = await apiRequest.db.get('/order');
-// const res = await apiRequest.server.post('/order', orders);
+// const res = await apiRequest.post('/order', order);

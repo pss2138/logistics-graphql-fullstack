@@ -1,21 +1,39 @@
-import { useMutation } from "react-query";
-import queryClient from "..";
-import apiRequest from "../apiRequest";
+import { useMutation, gql } from "@apollo/client";
 
-export default function useUpdateOrders(orders) {
-  return useMutation({
-    mutationKey: `order`,
-    // TODO : not sure if same queryKey with different method still request at the right timing (instead of not requesting)
-    mutationFn: async () => {
-      return await apiRequest.db.patch("/order", orders);
+const UPDATE_ORDERS = gql`
+  mutation UpdateOrders($orderInputs: [OrderInput]) {
+    updateOrders(orderInputs: $orderInputs) {
+      id
+      adminComment
+
+      orderStatus
+
+      orderNumFrgn
+      trackingNumUsa
+      buyerName
+      receiverName
+      personalCustomsIdNum
+      buyerPhone
+      deliveryAddress
+      deliveryMsg
+      productName
+      amount
+      option
+      memo
+    }
+  }
+`;
+
+export default function useUpdateOrders(orderInputs) {
+  return useMutation(UPDATE_ORDERS, {
+    variables: {
+      orderInputs,
     },
-    onSuccess: (data) => {
-      // request GET '/order' again to update. but it seems not useful for spread sheet.
-      queryClient.invalidateQueries("order");
-      // if (data.length > 0) queryClient.removeQueries("order"); // not sure if we need to remove as well
+    onCompleted: (data) => {
+      console.log("useUpdateOrders completed:", data);
     },
-    onError: () => {
-      // TODO: add defaultErrorHandler()
+    onError: (error) => {
+      console.log("useUpdateOrders ERROR:", error.networkError);
     },
   });
 }

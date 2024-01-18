@@ -2,11 +2,18 @@ import React, { useEffect, useState } from "react";
 import * as Styles from "./styles";
 import { statuses } from "../../../../utils/variables";
 
-const SelectCell = ({ initialValue, row: { original }, type }) => {
+const SelectCell = ({
+  initialValue,
+  row: { index, original },
+  columnId,
+  type,
+  handleUpdateItems,
+}) => {
   const [value, setValue] = useState(initialValue);
 
   const onChange = (e) => {
     setValue(e.target.value);
+    handleUpdateItems(index, original._id, { [columnId]: e.target.value });
     e.target.blur();
   };
 
@@ -19,7 +26,7 @@ const SelectCell = ({ initialValue, row: { original }, type }) => {
 
   return (
     <Styles.Container>
-      <Styles.Select value={value.en} onChange={onChange}>
+      <Styles.Select value={value} onChange={onChange}>
         {statuses[type].map((option, index) => {
           return (
             <Styles.Option key={index} value={option.en}>

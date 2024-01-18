@@ -14,7 +14,6 @@ const InputCell = ({
   row: { index, original },
   columnId,
   handleUpdateItems,
-  affectedOtherCells,
   ...validations
 }) => {
   const [value, setValue] = useState(initialValue);
