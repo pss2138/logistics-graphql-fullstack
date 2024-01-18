@@ -1,10 +1,15 @@
 import { gql } from "apollo-server-express";
-import { getOrders, updateOrders } from "../controllers/order.controller.js";
+import {
+  deleteOrders,
+  getOrders,
+  updateOrders,
+} from "../controllers/order.controller.js";
 
 const typeDefs = gql`
   type Order implements Base {
     id: ID
     adminComment: String
+    isDeleted: Boolean
 
     orderStatus: OrderStatus!
 
@@ -26,6 +31,7 @@ const typeDefs = gql`
 const resolvers = {
   Mutation: {
     updateOrders: updateOrders,
+    deleteOrders: deleteOrders,
   },
 
   Query: {

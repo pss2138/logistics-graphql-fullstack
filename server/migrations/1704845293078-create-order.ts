@@ -30,6 +30,11 @@ export class CreateOrderTable1635692362744 implements MigrationInterface {
             type: "timestamp with time zone",
           },
           {
+            name: "isDeleted",
+            type: "boolean",
+            default: false,
+          },
+          {
             name: "deletedAt",
             type: "timestamp with time zone",
           },

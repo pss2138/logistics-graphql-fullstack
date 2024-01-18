@@ -30,7 +30,9 @@ export const getOrders = async (parent, args) => {
     const orderRepository = (await DB.getDbDataSource()).getRepository(
       DB.Order
     );
-    const orders = await orderRepository.find();
+    const orders = await orderRepository.find({
+      where: { isDeleted: false },
+    });
 
     return orders;
   } catch (e) {
@@ -49,6 +51,31 @@ export const updateOrders = async (parent, args) => {
     });
 
     return orders;
+  } catch (e) {
+    console.log(e);
+    return new GraphQLError(e);
+  }
+};
+
+export const deleteOrders = async (parent, args) => {
+  try {
+    if (!args || !args.orderIds) {
+      return new GraphQLError("ERROR : Empty orderId", {
+        extensions: { code: "BAD_REQUEST" },
+      });
+    }
+
+    const orderIds = args.orderIds;
+    const orderRepository = (await DB.getDbDataSource()).getRepository(
+      DB.Order
+    );
+    for (let i = 0; i < orderIds.length; i++) {
+      await orderRepository.update(orderIds[i], {
+        isDeleted: true,
+        deletedAt: new Date(),
+      });
+    }
+    return { message: "ok" };
   } catch (e) {
     console.log(e);
     return new GraphQLError(e);

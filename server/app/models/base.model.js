@@ -15,6 +15,10 @@ const baseColumns = {
   updatedAt: {
     type: "timestamp with time zone",
   },
+  isDeleted: {
+    type: "boolean",
+    default: false,
+  },
   deletedAt: {
     type: "timestamp with time zone",
   },
