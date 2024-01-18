@@ -7,8 +7,10 @@ export default function useUploadOrder() {
     mutationKey: `order`,
     // TODO : not sure if same queryKey with different method still request at the right timing (instead of not requesting)
     mutationFn: async (order) => {
-      console.log("useUploadOrder order", order);
-      return await apiRequest.post("/order", order);
+      return await apiRequest.post(
+        "/order",
+        Object.assign(order, { orderStatus: order.orderStatus.en })
+      );
     },
     onSuccess: (data) => {
       // request GET '/order' again to update. but it seems not useful for spread sheet.

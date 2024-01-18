@@ -2,22 +2,28 @@ import { useMutation, gql } from "@apollo/client";
 
 const DELETE_ORDERS = gql`
   mutation DeleteOrders($orderIds: [ID]) {
-    mutate(orderIds: $orderIds) {
-      Order
+    deleteOrders(orderIds: $orderIds) {
+      message
     }
   }
 `;
 
-export default function useDeleteOrders(orderIds) {
+export default function useDeleteOrders(orderIds, handleDeleteSuccess) {
   return useMutation(DELETE_ORDERS, {
     variables: {
       orderIds,
     },
     onCompleted: (data) => {
-      console.log("useDeleteOrders completed:", data);
+      if (data.deleteOrders.message === "ok") {
+        handleDeleteSuccess();
+      }
     },
     onError: (error) => {
-      console.log("useDeleteOrders ERROR:", error);
+      if (error.networkError) {
+        console.log("useDeleteOrders ERROR:", error.networkError.result);
+      } else {
+        console.log("useDeleteOrders ERROR:", error);
+      }
     },
   });
 }

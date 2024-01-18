@@ -33,7 +33,7 @@ export default function useUpdateOrders(orderInputs) {
       console.log("useUpdateOrders completed:", data);
     },
     onError: (error) => {
-      console.log("useUpdateOrders ERROR:", error.networkError);
+      console.log("useUpdateOrders ERROR:", error);
     },
   });
 }

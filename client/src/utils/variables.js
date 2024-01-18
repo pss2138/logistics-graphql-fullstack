@@ -45,7 +45,10 @@ export const infoMsgs = {
 };
 export const successMsgs = {
   ITEM_SAVE_SUCCESSED: {
-    message: "Successfully saved data.",
+    message: "Successfully saved the data.",
+  },
+  ITEM_DELETE_SUCCESSED: {
+    message: "Successfully deleted the data.",
   },
 };
 

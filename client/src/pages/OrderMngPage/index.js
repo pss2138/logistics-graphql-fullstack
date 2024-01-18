@@ -65,7 +65,7 @@ const OrderMngPage = () => {
   const saveUpdatingOrders = (e) => {
     e.preventDefault();
     if (updatingOrders.length > 0) {
-      updateOrdersMutation[0](updatingOrders);
+      updateOrdersMutation[0]();
 
       if (updateOrdersMutation.error) {
         toastError(errorMsgs.ITEM_SAVE_FAILED.message);
@@ -84,7 +84,15 @@ const OrderMngPage = () => {
   const deleteModalRef = useRef(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deletingOrders, setDeletingOrders] = useState([]);
-  const deleteOrdersMutation = useDeleteOrders();
+  const handleDeleteSuccess = () => {
+    setDeletingOrders([]);
+    setIsDeleteModalOpen(false);
+    toastSuccess(successMsgs.ITEM_DELETE_SUCCESSED);
+  };
+  const deleteOrdersMutation = useDeleteOrders(
+    deletingOrders.map((row) => row.original.id),
+    handleDeleteSuccess
+  );
 
   const handleClickDelete = () => {
     if (deletingOrders.length > 0) {
@@ -97,13 +105,10 @@ const OrderMngPage = () => {
   const requestDeleteOrders = (e) => {
     e.preventDefault();
     if (deletingOrders.length > 0) {
-      deleteOrdersMutation.mutate(
-        deletingOrders.map((row) => row.original._id)
-      );
+      deleteOrdersMutation[0]();
       if (deleteOrdersMutation.error) {
         toastError(errorMsgs.ITEM_DELETE_FAILED.message);
       }
-      setDeletingOrders([]);
     }
   };
 

@@ -8,7 +8,6 @@ const AddItemsBtn = ({ itemType, setItems, uploadItemsMutation }) => {
     try {
       if (itemType.en === "order") {
         const newOrder = {
-          id: "ioij213512joi2135",
           orderStatus: { order: 1, en: "initOrdered" },
           orderedAt: "2023-10-01",
           orderNumFrgn: (Math.random() * 10000000000).toFixed(0).toString(),
