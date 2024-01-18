@@ -1,5 +1,5 @@
 import { gql } from "apollo-server-express";
-import { getOrders } from "../controllers/order.controller.js";
+import { getOrders, updateOrders } from "../controllers/order.controller.js";
 
 const typeDefs = gql`
   type Order implements Base {
@@ -24,9 +24,9 @@ const typeDefs = gql`
 `;
 
 const resolvers = {
-  // Mutation: {
-  //   updateOrder,
-  // },
+  Mutation: {
+    updateOrders: updateOrders,
+  },
 
   Query: {
     orders: getOrders,

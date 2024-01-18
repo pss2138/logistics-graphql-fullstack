@@ -38,3 +38,19 @@ export const getOrders = async (parent, args) => {
     return new GraphQLError(e);
   }
 };
+
+export const updateOrders = async (parent, args) => {
+  try {
+    const orderRepository = (await DB.getDbDataSource()).getRepository(
+      DB.Order
+    );
+    const orders = await args.orderInputs.map(async (order) => {
+      return await orderRepository.update(order.id, order);
+    });
+
+    return orders;
+  } catch (e) {
+    console.log(e);
+    return new GraphQLError(e);
+  }
+};
