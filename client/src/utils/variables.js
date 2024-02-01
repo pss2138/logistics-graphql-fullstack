@@ -29,6 +29,9 @@ export const errorMsgs = {
   ITEM_DELETE_FAILED: {
     message: "Failed item deleting.\nAfter refresh, please try again.",
   },
+  PAYMENT_FAILED: {
+    message: "Subscription failed.\nPlease try again.",
+  },
 };
 export const warnMsgs = {
   CONSTANT_ERROR: {
@@ -50,6 +53,86 @@ export const successMsgs = {
   ITEM_DELETE_SUCCESSED: {
     message: "Successfully deleted the data.",
   },
+  PAYMENT_SUCCESS: {
+    message: "Successfully subscription started!",
+  },
+};
+
+// Stripe
+export const handleStripeError = (error) => {
+  let errorMsg;
+  switch (error.code) {
+    case "incorrect_number":
+      errorMsg =
+        "Card number is incorrect. Please check the card number or use a different card.";
+      return errorMsg;
+    case "incorrect_cvc":
+      errorMsg =
+        "Incorrect cvc number. Please check the cvc number or use a different card.";
+      return errorMsg;
+    case "incorrect_zip":
+      errorMsg =
+        "Invalid zip number. Please check the postal code or use a different card.";
+      return errorMsg;
+    case "postal_code_invalid":
+      errorMsg =
+        "Invalid postal code. Please check the postal code or use a different card.";
+      return errorMsg;
+    case "incomplete_cvc":
+      errorMsg =
+        "Incomplete cvc number. Please check the cvc number or use a different card.";
+      return errorMsg;
+    case "incomplete_number":
+      errorMsg =
+        "Incomplete card number. Please check the card number or use a different card.";
+      return errorMsg;
+    case "invalid_cvc":
+      errorMsg =
+        "Invalid cvc number. Please check the cvc number or use a different card.";
+      return errorMsg;
+    case "invalid_expiry_month":
+      errorMsg =
+        "Invalid expiration month. Please check the expiration month or use a different card.";
+      return errorMsg;
+    case "invalid_expiry_year":
+      errorMsg =
+        "Invalid expiration year. Please check the expiration year or use a different card.";
+      return errorMsg;
+    case "card_declined":
+      if (error.decline_code === "insufficient_funds") {
+        errorMsg = "Card has insufficient funds. Please try another card.";
+      } else if (error.decline_code === "lost_card") {
+        errorMsg = "Card has been reported as lost. Please try another card.";
+      } else if (error.decline_code === "stolen_card") {
+        errorMsg = "Card has been reported as stolen. Please try another card.";
+      } else if (error.decline_code === "generic_decline") {
+        errorMsg =
+          "Card needs a contact with the card issuer. Please try another card.";
+      } else {
+        return error.message;
+        // errorMsg = "Card declined. Please try another card.";
+      }
+      return errorMsg;
+    case "expired_card":
+      errorMsg = "Card is expired. Please try another card.";
+      return errorMsg;
+    case "card_decline_rate_limit_exceeded":
+      errorMsg =
+        "This card has been declined too many times. Please try again after 24 hours or with a different card.";
+      return errorMsg;
+    case "country_unsupported":
+      errorMsg = "Country not yet supported. Please Contact Moverse.";
+      return errorMsg;
+    case "processing_error":
+      errorMsg =
+        "Payment processing error. Please try again or with a different card.";
+      return errorMsg;
+    default:
+      // Handle any other unexpected error codes
+      // errorMsg = "Error occurred. Please contact Moverse.";
+      // return errorMsg;
+      return error.message;
+  }
 };
 
 // Orders

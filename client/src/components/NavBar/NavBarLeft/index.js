@@ -4,7 +4,10 @@ import * as Styles from "./styles";
 
 const NavBarLeft = () => {
   const navigate = useNavigate();
-  const menus = [{ text: "Order", path: "/" }];
+  const menus = [
+    { text: "Order", path: "/" },
+    { text: "Subscription", path: "/subscribe" },
+  ];
 
   const handleClickMenu = (path) => {
     navigate(path);

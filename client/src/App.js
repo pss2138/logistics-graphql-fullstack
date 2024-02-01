@@ -5,10 +5,32 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./store";
 import { StyledToast } from "./style/global";
 import "react-toastify/dist/ReactToastify.css";
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+
+const httpLink = createHttpLink({
+  uri: process.env.REACT_APP_GRAPHQL_URI,
+});
+
+const authLink = setContext((_, { headers }) => {
+  const userState = JSON.parse(localStorage.getItem("persist:root")).userState;
+  const token = JSON.parse(userState).token;
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_URI,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
