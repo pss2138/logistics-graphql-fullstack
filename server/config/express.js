@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import order from "../app/routes/order.route.js";
+import payment from "../app/routes/payment.route.js";
 
 export default () => {
   const app = express();
@@ -23,6 +24,7 @@ export default () => {
 
   // Routing
   app.use("/order", order);
+  app.use("/payment", payment);
 
   return app;
 };

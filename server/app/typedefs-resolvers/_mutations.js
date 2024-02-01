@@ -4,6 +4,7 @@ const typeDefs = gql`
   type Mutation {
     updateOrders(orderInputs: [OrderInput]): [Order]
     deleteOrders(orderIds: [ID]): BaseResponse
+    stripeCreatePaymentIntent: PaymentInfo
   }
 
   type BaseResponse {

@@ -18,6 +18,11 @@ const typeDefs = gql`
     option: String
     memo: String
   }
+
+  input PaymentInput {
+    paymentIntent: String
+    isCardSave: Boolean
+  }
 `;
 
 export default typeDefs;
