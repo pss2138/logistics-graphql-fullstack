@@ -2,15 +2,24 @@ import { GraphQLError } from "graphql";
 import { getPriceId, getUser } from "../utils/auth.js";
 import Stripe from "stripe";
 
-const stripe = Stripe(process.env.SERVER_STRIPE_SECRET_KEY);
-
 export const stripeCreatePaymentIntent = async (parent, args, contextValue) => {
+  const stripe = Stripe(process.env.SERVER_STRIPE_SECRET_KEY);
   if (!contextValue.user) return null;
+  const user = contextValue.user;
   const priceId = getPriceId();
 
+  if (!user.stripeId) {
+    const customer = await stripe.customers.create({
+      name: user.username,
+      email: user.email,
+    });
+    // TODO: save generated stripe customer Id for the first time payment user in User database
+    user.stripeId = customer.id;
+  }
+
   try {
-    const subscription = await stripe.subscription.create({
-      customer: contextValue.user.id,
+    const subscription = await stripe.subscriptions.create({
+      customer: user.stripeId,
       items: [
         {
           price: priceId,
@@ -37,11 +46,12 @@ export const stripeCreatePaymentIntent = async (parent, args, contextValue) => {
     return paymentInfo;
   } catch (e) {
     console.log(e);
-    return new GraphQLError(e);
+    return new GraphQLError("server error");
   }
 };
 
 export const getSubscriptionStatus = async (req, res) => {
+  const stripe = Stripe(process.env.SERVER_STRIPE_SECRET_KEY);
   if (!req.body || !req.body.paymentIntent) {
     return res.status(400).json({ message: "payment intent is empty" });
   }
@@ -63,6 +73,6 @@ export const getSubscriptionStatus = async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    return res.status(500).json(e);
+    return res.status(500).json("server error");
   }
 };

@@ -10,6 +10,7 @@ export function getUser(token) {
         // dummy user data from token
         resolve({
           id: "12345",
+          stripeId: "1234321",
           username: "Ken",
           email: "test1234321@gmail.com",
         });
