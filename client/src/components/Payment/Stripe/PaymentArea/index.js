@@ -15,6 +15,10 @@ const PaymentArea = ({}) => {
   };
 
   useEffect(() => {
+    paymentInfoMutation[0]();
+  }, []);
+
+  useEffect(() => {
     if (paymentInfoMutation.data?.clientSecret) {
       setStripePromise(loadStripe(paymentInfoMutation.data.clientSecret));
     }
@@ -25,6 +29,7 @@ const PaymentArea = ({}) => {
       );
     }
   }, [paymentInfoMutation]);
+
   return (
     <Styles.Container>
       {!paymentInfoMutation.loading &&
