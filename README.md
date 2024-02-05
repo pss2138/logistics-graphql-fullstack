@@ -1,24 +1,19 @@
-
 # [ Logistics-GraphQL-Fullstack ]
 
 **"Logistics"** is an order management project with **GraphQL**, **Node.js** and **React**.
-
 
 ## Presumption
 
 You are an online store seller managing the incoming orders status using "Logistics"!
 
-
 ## Goal
 
 This project is to learn structures for **implementing GraphQL into already existing project**. Most of companies would have already used REST apis in the server, thus this project will let you have a sight how to implement GraphQL in both client and server side. Throughout "Logistics", you can learn how to fetch data from database on both client/server sides. Please see more instructions in each sides of the repositories.
-
 
 ## Stack
 
 - **Client:** React, GraphQL, react-query, react-table, styled-components
 - **Server:** Express.js, GraphQL, TypeORM, PostgreSQL
-
 
 ## Features
 
@@ -27,11 +22,9 @@ This project is to learn structures for **implementing GraphQL into already exis
 - Mutual API structures handling (REST & GraphQL)
 - **Stripe** (subscription, email receipt, etc.)
 
-
 ## Authors
 
 - [@pss2138](https://github.com/pss2138)
-
 
 ## Environment Variables
 
@@ -40,7 +33,7 @@ To run this project, you will need to add the following environment variables to
 ### client
 
 - `REACT_APP_GRAPHQL_URI=http://localhost:4000/graphql`
-- `REACT_APP_SERVER_DOMAIN=http://localhost:4000/graphql`
+- `REACT_APP_SERVER_DOMAIN=http://localhost:4000`
 
 ### server
 
@@ -64,6 +57,7 @@ Clone the project
 ```
 
 ### Set Up Database Environment
+
 Create either local or cloud database for the project (We used local PostgreSQL db).
 
 ### Client
@@ -106,7 +100,6 @@ Start the server
   $ npm run start
 ```
 
-    
 ## Related
 
 Here are some related projects
